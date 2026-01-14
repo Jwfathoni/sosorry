@@ -31,59 +31,79 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.95);
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
-      padding: 24px 28px;
-      border-radius: 20px;
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
-      max-width: 480px;
+      padding: 22px 20px 18px;
+      border-radius: 18px;
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.15);
+      border: 2px solid rgba(255, 123, 180, 0.85);
       text-align: center;
-      border: 2px solid rgba(255, 123, 180, 0.8);
       transition: opacity 0.3s ease, transform 0.3s ease;
       animation: popIn 0.6s ease-out both;
     }
 
     @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.95);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      0% { opacity: 0; transform: translateY(16px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 1.9rem;
+      margin: 4px 0 12px;
+      font-size: 1.6rem;
       font-weight: 700;
+    }
+
+    .emoji {
+      font-size: 2.4rem;
+      margin-bottom: 4px;
+      animation: emojiFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes emojiFloat {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
     }
 
     p {
       margin: 8px 0;
       color: #444;
-      line-height: 1.4rem;
-      font-size: 1rem;
+      line-height: 1.55;
+      font-size: 0.98rem;
+      text-align: justify;
     }
 
-    .emoji {
-      font-size: 2.6rem;
-      margin-bottom: 8px;
-      animation: emojiFloat 3.5s ease-in-out infinite;
+    .fade-text {
+      animation: fadeUp 0.6s ease-out;
     }
 
-    @keyframes emojiFloat {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .subline {
+      margin-top: 4px;
+      font-size: 0.82rem;
+      color: #777;
+      text-align: center;
+      min-height: 18px;
+      animation: subPulse 3.5s ease-in-out infinite;
+    }
+
+    @keyframes subPulse {
+      0% { opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { opacity: 0.7; }
     }
 
     .buttons {
-      margin-top: 22px;
+      margin-top: 18px;
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
@@ -92,13 +112,36 @@
       cursor: pointer;
       font-weight: 600;
       border-radius: 999px;
-      padding: 12px 22px;
+      padding: 11px 20px;
       font-size: 0.95rem;
       transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease,
-        color 0.2s ease;
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        opacity 0.18s ease;
+    }
+
+    #nextBtn {
+      width: 100%;
+      margin-top: 18px;
+      background: #ff7bb4;
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 123, 180, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+    }
+
+    #nextBtn.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nextBtn:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(255, 123, 180, 0.6);
     }
 
     #noBtn {
@@ -107,8 +150,8 @@
     }
 
     #noBtn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 9px rgba(0,0,0,0.12);
     }
 
     #yesWrapper {
@@ -120,25 +163,32 @@
     #yesBtn {
       background: #ff5fa2;
       color: white;
-      box-shadow: 0 4px 12px rgba(255, 95, 162, 0.6);
+      box-shadow: 0 4px 12px rgba(255, 95, 162, 0.7);
       animation: yesPulse 1.8s ease-in-out infinite;
     }
 
     @keyframes yesPulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.04); }
       100% { transform: scale(1); }
     }
 
     #yesBtn:hover {
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 6px 16px rgba(255, 95, 162, 0.85);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 6px 16px rgba(255, 95, 162, 0.9);
+    }
+
+    .question-text {
+      margin-top: 14px;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+      text-align: center;
     }
 
     .hidden-card {
       opacity: 0;
       pointer-events: none;
-      transform: scale(0.9);
+      transform: scale(0.94);
     }
 
     .full-yes {
@@ -149,6 +199,7 @@
       justify-content: center;
       background: radial-gradient(circle at top, #ffe6f0, #ffd1dc, #f8bbff);
       z-index: 9999;
+      padding: 16px;
     }
 
     .particle {
@@ -164,91 +215,71 @@
         transform: translateY(0) scale(0.7);
         opacity: 0;
       }
-      15% {
-        opacity: 1;
-      }
+      15% { opacity: 1; }
       100% {
-        transform: translateY(-80px) scale(1.2);
+        transform: translateY(-70px) scale(1.2);
         opacity: 0;
       }
-    }
-
-    .subline-rotator {
-      margin-top: 6px;
-      font-size: 0.85rem;
-      color: #777;
-      min-height: 18px;
-      opacity: 0.9;
     }
   </style>
 </head>
 <body>
 
+  <!-- layer untuk partikel hati -->
   <div id="particleLayer"></div>
 
   <div class="card" id="card">
     <div class="emoji">🥺</div>
     <h1>Maafkan Aku</h1>
 
-    <p>
-      Aku ingin minta maaf, bukan karena seharusnya aku minta maaf,
-      tapi karena aku benar-benar sadar kalau aku sudah melakukan kesalahan yang besar.
-      Kesalahan yang tidak cuma bikin kamu kecewa, tapi juga bikin aku kecewa sama diriku sendiri.
-    </p>
-    <p>
-      Aku sering mikir ulang tentang hal-hal yang terjadi.
-      Semakin aku mikir, semakin aku sadar betapa fatalnya hal yang aku lakukan waktu itu.
-      Aku tidak bisa balik ke masa lalu buat benerin semuanya, tapi aku bisa belajar dari situ.
-    </p>
-    <p>
-      Setiap hari aku coba jadi orang yang lebih baik, bukan untuk keliatan baik,
-      tapi karena aku tidak mau kesalahan itu terus nempel di diri aku selamanya.
-    </p>
-    <p>
-      Bersama kamu, aku pernah merasa jadi versi terbaik dari diriku sendiri.
-      Kamu bikin aku paham banyak hal tentang hidup, tentang cinta, dan tentang cara memperlakukan seseorang.
-    </p>
-    <p>
-      Mungkin sekarang aku tidak punya kesempatan lagi.
-      Mungkin pintunya sudah tertutup, dan kalau itu pilihanmu, aku terima.
-    </p>
-    <p>
-      Tapi kalau pun tidak bisa kembali seperti dulu, setidaknya izinkan aku tetap jadi teman.
-      Teman yang menghargai kamu tanpa nuntut apa-apa dan tanpa nyusahin kamu.
-      Terima kasih sudah pernah bikin aku jadi seseorang yang lebih baik,
-      bahkan lewat luka dan penyesalan yang aku sendiri ciptakan.
-    </p>
+    <!-- isi paragraf bertahap -->
+    <div id="stepContent"></div>
 
-    <p style="margin-top:14px; font-size:0.9rem; color:#666;">
-      Kamu mau maafin aku tidak? 🙈
-    </p>
-    <div class="subline-rotator" id="subline">
-      (Jawaban kamu bener-bener berarti buat aku)
+    <!-- pertanyaan terakhir + tombol iya/tidak -->
+    <div id="questionSection" style="display:none;">
+      <p class="question-text fade-text">
+        Kamu mau maafin aku tidak? 🙈
+      </p>
+      <div class="buttons">
+        <button id="noBtn">Tidak 😠</button>
+        <span id="yesWrapper">
+          <button id="yesBtn">Iya, aku maafin 🤍</button>
+        </span>
+      </div>
     </div>
 
-    <div class="buttons">
-      <button id="noBtn">Tidak 😠</button>
-      <span id="yesWrapper"><button id="yesBtn">Iya, aku maafin 🤍</button></span>
+    <div class="subline" id="subline">
+      Sentuh tombol ketika kamu sudah siap lanjut
     </div>
+
+    <button id="nextBtn">Selanjutnya</button>
   </div>
 
+  <!-- layar penuh kalau iya sudah sangat besar -->
   <div id="fullYesContainer" class="full-yes" style="display:none;">
     <button id="bigYesBtn" style="
       border:none;
       cursor:pointer;
       border-radius:40px;
-      padding:24px 40px;
-      font-size:1.6rem;
+      padding:22px 26px;
+      font-size:1.4rem;
       font-weight:700;
       background:#ff5fa2;
       color:white;
       box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      max-width:90%;
+      text-align:center;
     ">
       Oke, aku maafin kamu 🤍
     </button>
   </div>
 
   <script>
+    const stepContent = document.getElementById('stepContent');
+    const questionSection = document.getElementById('questionSection');
+    const nextBtn = document.getElementById('nextBtn');
+    const subline = document.getElementById('subline');
+
     const noBtn = document.getElementById('noBtn');
     const yesWrapper = document.getElementById('yesWrapper');
     const yesBtn = document.getElementById('yesBtn');
@@ -256,40 +287,87 @@
     const fullYesContainer = document.getElementById('fullYesContainer');
     const bigYesBtn = document.getElementById('bigYesBtn');
     const particleLayer = document.getElementById('particleLayer');
-    const subline = document.getElementById('subline');
 
-    let yesScale = 1;
-
-    // Musik background dari musik.mp3
+    // musik background
     const bgMusic = new Audio("musik.mp3");
     bgMusic.loop = true;
-
     let musicStarted = false;
+
     function startMusic() {
       if (musicStarted) return;
       musicStarted = true;
       bgMusic.volume = 0.7;
-      bgMusic.play().catch(() => {
-        // kalau browser blok autoplay, musik akan jalan setelah klik berikutnya
-      });
+      bgMusic.play().catch(() => {});
     }
 
+    // paragraf bertahap
+    const steps = [
+      "Aku ingin minta maaf, bukan karena seharusnya aku minta maaf, tapi karena aku benar-benar sadar kalau aku sudah melakukan kesalahan yang besar.",
+      "Kesalahan yang tidak cuma bikin kamu kecewa, tapi juga bikin aku kecewa sama diriku sendiri. Aku sering mikir ulang tentang hal-hal yang terjadi dan sadar betapa fatalnya yang aku lakukan waktu itu.",
+      "Aku tidak bisa balik ke masa lalu buat benerin semuanya. Tapi setiap hari aku coba jadi orang yang lebih baik, bukan untuk keliatan baik, tapi karena aku tidak mau kesalahan itu terus nempel di diri aku selamanya.",
+      "Bersama kamu, aku pernah merasa jadi versi terbaik dari diriku sendiri. Kamu bikin aku paham banyak hal tentang hidup, tentang cinta, dan tentang cara memperlakukan seseorang.",
+      "Mungkin sekarang aku tidak punya kesempatan lagi. Mungkin pintunya sudah tertutup, dan kalau itu pilihanmu, aku terima.",
+      "Tapi kalau pun tidak bisa kembali seperti dulu, setidaknya izinkan aku tetap jadi teman. Teman yang menghargai kamu tanpa nuntut apa-apa dan tanpa nyusahin kamu. Terima kasih sudah pernah bikin aku jadi seseorang yang lebih baik, bahkan lewat luka dan penyesalan yang aku sendiri ciptakan."
+    ];
+
     const sublines = [
-      "(Jawaban kamu bener-bener berarti buat aku)",
-      "Apa pun jawabannya, aku tetap menghargai kamu.",
-      "Kalau mau pelan-pelan juga tidak apa-apa kok.",
-      "Aku cuma pengin jujur sama perasaanku.",
+      "Sentuh tombol ketika kamu sudah siap lanjut",
+      "Tidak harus buru-buru, pelan-pelan saja",
+      "Terima kasih sudah mau baca sampai sini",
+      "Setiap klik berarti banyak buat aku"
     ];
     let subIndex = 0;
     setInterval(() => {
       subIndex = (subIndex + 1) % sublines.length;
-      subline.style.opacity = 0;
+      subline.style.opacity = 0.4;
       setTimeout(() => {
         subline.textContent = sublines[subIndex];
-        subline.style.opacity = 0.9;
+        subline.style.opacity = 1;
       }, 200);
     }, 4000);
 
+    let currentStep = 0;
+    let nextTimer = null;
+
+    function showStep(index) {
+      questionSection.style.display = "none";
+      stepContent.innerHTML = "";
+      const p = document.createElement("p");
+      p.className = "fade-text";
+      p.textContent = steps[index];
+      stepContent.appendChild(p);
+
+      nextBtn.classList.remove("show");
+      nextBtn.disabled = true;
+
+      if (nextTimer) clearTimeout(nextTimer);
+      nextTimer = setTimeout(() => {
+        nextBtn.classList.add("show");
+        nextBtn.disabled = false;
+      }, 3000);
+    }
+
+    function showQuestion() {
+      stepContent.innerHTML = "";
+      questionSection.style.display = "block";
+      nextBtn.classList.remove("show");
+      nextBtn.disabled = true;
+      subline.textContent = "Ini bagian yang paling jujur dari semuanya";
+    }
+
+    nextBtn.addEventListener('click', () => {
+      startMusic();
+      if (currentStep < steps.length - 1) {
+        currentStep += 1;
+        showStep(currentStep);
+      } else {
+        showQuestion();
+      }
+    });
+
+    document.body.addEventListener('click', startMusic, { once: true });
+
+    // partikel hati
     function spawnParticle(x, y, symbol = "💗") {
       const span = document.createElement("span");
       span.className = "particle";
@@ -303,17 +381,13 @@
       span.style.fontSize = `${size}rem`;
 
       particleLayer.appendChild(span);
-
-      span.addEventListener("animationend", () => {
-        span.remove();
-      });
+      span.addEventListener("animationend", () => span.remove());
     }
 
     function spawnBurstAround(element) {
       const rect = element.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-
       const symbols = ["💗", "✨", "💞", "💖"];
       for (let i = 0; i < 6; i++) {
         const sym = symbols[Math.floor(Math.random() * symbols.length)];
@@ -321,12 +395,12 @@
       }
     }
 
+    let yesScale = 1;
+
     noBtn.addEventListener('click', () => {
       startMusic();
-
       yesScale *= 1.35;
       yesWrapper.style.transform = `scale(${yesScale})`;
-
       spawnBurstAround(noBtn);
 
       if (yesScale > 1.5 && yesScale <= 2.5) {
@@ -353,11 +427,11 @@
     bigYesBtn.addEventListener('click', () => {
       startMusic();
       spawnBurstAround(bigYesBtn);
-      alert("Aku janji bakal jadi lebih baik setiap harinya 🫶");
+      alert("Aku janji bakal terus berusaha jadi lebih baik setiap harinya 🫶");
     });
 
-    // Kalau user klik di mana saja di body, coba mulai musik juga
-    document.body.addEventListener('click', startMusic, { once: true });
+    // mulai dari step pertama
+    showStep(currentStep);
   </script>
 </body>
 </html>
