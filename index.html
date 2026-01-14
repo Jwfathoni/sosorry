@@ -84,21 +84,6 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    .subline {
-      margin-top: 4px;
-      font-size: 0.82rem;
-      color: #777;
-      text-align: center;
-      min-height: 18px;
-      animation: subPulse 3.5s ease-in-out infinite;
-    }
-
-    @keyframes subPulse {
-      0% { opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { opacity: 0.7; }
-    }
-
     .buttons {
       margin-top: 18px;
       display: flex;
@@ -225,17 +210,14 @@
 </head>
 <body>
 
-  <!-- layer untuk partikel hati -->
   <div id="particleLayer"></div>
 
   <div class="card" id="card">
-    <div class="emoji">🥺</div>
-    <h1>Maafkan Aku</h1>
+    <div class="emoji" id="emoji">🥺</div>
+    <h1 id="titleText">Maafkan Aku</h1>
 
-    <!-- isi paragraf bertahap -->
     <div id="stepContent"></div>
 
-    <!-- pertanyaan terakhir + tombol iya/tidak -->
     <div id="questionSection" style="display:none;">
       <p class="question-text fade-text">
         Kamu mau maafin aku tidak? 🙈
@@ -248,14 +230,9 @@
       </div>
     </div>
 
-    <div class="subline" id="subline">
-      Sentuh tombol ketika kamu sudah siap lanjut
-    </div>
-
     <button id="nextBtn">Selanjutnya</button>
   </div>
 
-  <!-- layar penuh kalau iya sudah sangat besar -->
   <div id="fullYesContainer" class="full-yes" style="display:none;">
     <button id="bigYesBtn" style="
       border:none;
@@ -278,7 +255,9 @@
     const stepContent = document.getElementById('stepContent');
     const questionSection = document.getElementById('questionSection');
     const nextBtn = document.getElementById('nextBtn');
-    const subline = document.getElementById('subline');
+
+    const emojiEl = document.getElementById('emoji');
+    const titleEl = document.getElementById('titleText');
 
     const noBtn = document.getElementById('noBtn');
     const yesWrapper = document.getElementById('yesWrapper');
@@ -288,7 +267,6 @@
     const bigYesBtn = document.getElementById('bigYesBtn');
     const particleLayer = document.getElementById('particleLayer');
 
-    // musik background
     const bgMusic = new Audio("musik.mp3");
     bgMusic.loop = true;
     let musicStarted = false;
@@ -300,7 +278,10 @@
       bgMusic.play().catch(() => {});
     }
 
-    // paragraf bertahap
+    // coba autoplay saat halaman selesai load
+    window.addEventListener("load", startMusic);
+    document.body.addEventListener("click", startMusic, { once: true });
+
     const steps = [
       "Aku ingin minta maaf, bukan karena seharusnya aku minta maaf, tapi karena aku benar-benar sadar kalau aku sudah melakukan kesalahan yang besar.",
       "Kesalahan yang tidak cuma bikin kamu kecewa, tapi juga bikin aku kecewa sama diriku sendiri. Aku sering mikir ulang tentang hal-hal yang terjadi dan sadar betapa fatalnya yang aku lakukan waktu itu.",
@@ -310,28 +291,39 @@
       "Tapi kalau pun tidak bisa kembali seperti dulu, setidaknya izinkan aku tetap jadi teman. Teman yang menghargai kamu tanpa nuntut apa-apa dan tanpa nyusahin kamu. Terima kasih sudah pernah bikin aku jadi seseorang yang lebih baik, bahkan lewat luka dan penyesalan yang aku sendiri ciptakan."
     ];
 
-    const sublines = [
-      "Sentuh tombol ketika kamu sudah siap lanjut",
-      "Tidak harus buru-buru, pelan-pelan saja",
-      "Terima kasih sudah mau baca sampai sini",
-      "Setiap klik berarti banyak buat aku"
+    const titles = [
+      "Aku Mengakui Kesalahanku",
+      "Penyesalanku",
+      "Usaha Untuk Jadi Lebih Baik",
+      "Bersama Kamu Aku Lebih Baik",
+      "Tentang Kesempatan Kita",
+      "Jika Kita Hanya Bisa Jadi Teman",
+      "Maafkan Aku"
     ];
-    let subIndex = 0;
-    setInterval(() => {
-      subIndex = (subIndex + 1) % sublines.length;
-      subline.style.opacity = 0.4;
-      setTimeout(() => {
-        subline.textContent = sublines[subIndex];
-        subline.style.opacity = 1;
-      }, 200);
-    }, 4000);
+
+    const emojis = [
+      "😔",
+      "😞",
+      "🕊️",
+      "💞",
+      "🚪",
+      "🤝",
+      "🥺"
+    ];
 
     let currentStep = 0;
     let nextTimer = null;
 
+    function setHeaderForStep(index) {
+      emojiEl.textContent = emojis[index] || "🥺";
+      titleEl.textContent = titles[index] || "Maafkan Aku";
+    }
+
     function showStep(index) {
       questionSection.style.display = "none";
       stepContent.innerHTML = "";
+      setHeaderForStep(index);
+
       const p = document.createElement("p");
       p.className = "fade-text";
       p.textContent = steps[index];
@@ -344,7 +336,7 @@
       nextTimer = setTimeout(() => {
         nextBtn.classList.add("show");
         nextBtn.disabled = false;
-      }, 3000);
+      }, 5000); // 5 detik
     }
 
     function showQuestion() {
@@ -352,7 +344,9 @@
       questionSection.style.display = "block";
       nextBtn.classList.remove("show");
       nextBtn.disabled = true;
-      subline.textContent = "Ini bagian yang paling jujur dari semuanya";
+
+      emojiEl.textContent = emojis[6];
+      titleEl.textContent = titles[6];
     }
 
     nextBtn.addEventListener('click', () => {
@@ -365,9 +359,6 @@
       }
     });
 
-    document.body.addEventListener('click', startMusic, { once: true });
-
-    // partikel hati
     function spawnParticle(x, y, symbol = "💗") {
       const span = document.createElement("span");
       span.className = "particle";
