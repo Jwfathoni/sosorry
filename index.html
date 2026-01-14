@@ -30,9 +30,36 @@
       100% { background-position: 0% 50%; }
     }
 
-    .card {
+    .page {
       width: 100%;
       max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-image-wrapper {
+      width: 75%;
+      max-width: 260px;
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      background: rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #headerImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card {
+      width: 100%;
       background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
       padding: 22px 20px 18px;
@@ -53,18 +80,6 @@
       margin: 4px 0 12px;
       font-size: 1.6rem;
       font-weight: 700;
-    }
-
-    .emoji {
-      font-size: 2.4rem;
-      margin-bottom: 4px;
-      animation: emojiFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes emojiFloat {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-      100% { transform: translateY(0); }
     }
 
     p {
@@ -187,6 +202,13 @@
       padding: 16px;
     }
 
+    .full-yes-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+    }
+
     .particle {
       position: absolute;
       font-size: 1.2rem;
@@ -206,49 +228,130 @@
         opacity: 0;
       }
     }
+
+    /* confetti */
+    #confettiLayer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9998;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -10px;
+      width: 8px;
+      height: 14px;
+      opacity: 0.9;
+      animation: confettiFall 2.5s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotateZ(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotateZ(360deg);
+        opacity: 0;
+      }
+    }
+
+    .wa-button,
+    .wa-button-overlay {
+      display: inline-block;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: #25D366;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      font-size: 0.95rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .wa-button:hover,
+    .wa-button-overlay:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .wa-container {
+      margin-top: 16px;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <div id="particleLayer"></div>
+  <div id="confettiLayer"></div>
 
-  <div class="card" id="card">
-    <div class="emoji" id="emoji">🥺</div>
-    <h1 id="titleText">Maafkan Aku</h1>
-
-    <div id="stepContent"></div>
-
-    <div id="questionSection" style="display:none;">
-      <p class="question-text fade-text">
-        Kamu mau maafin aku tidak? 🙈
-      </p>
-      <div class="buttons">
-        <button id="noBtn">Tidak 😠</button>
-        <span id="yesWrapper">
-          <button id="yesBtn">Iya, aku maafin 🤍</button>
-        </span>
-      </div>
+  <div class="page">
+    <div class="header-image-wrapper">
+      <img id="headerImage" src="gambar/1.png" alt="gambar judul">
     </div>
 
-    <button id="nextBtn">Selanjutnya</button>
+    <div class="card" id="card">
+      <h1 id="titleText">Maafkan Aku</h1>
+
+      <div id="stepContent"></div>
+
+      <div id="questionSection" style="display:none;">
+        <p class="question-text fade-text">
+          Kamu mau maafin aku tidak? 🙈
+        </p>
+        <div class="buttons">
+          <button id="noBtn">Tidak 😠</button>
+          <span id="yesWrapper">
+            <button id="yesBtn">Iya, aku maafin 🤍</button>
+          </span>
+        </div>
+        <div class="wa-container" id="waContainer">
+          <a
+            href="https://wa.me/6287820678698?text=hallo"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="wa-button"
+          >
+            Chat aku di WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <button id="nextBtn">Selanjutnya</button>
+    </div>
   </div>
 
   <div id="fullYesContainer" class="full-yes" style="display:none;">
-    <button id="bigYesBtn" style="
-      border:none;
-      cursor:pointer;
-      border-radius:40px;
-      padding:22px 26px;
-      font-size:1.4rem;
-      font-weight:700;
-      background:#ff5fa2;
-      color:white;
-      box-shadow:0 10px 30px rgba(0,0,0,0.25);
-      max-width:90%;
-      text-align:center;
-    ">
-      Oke, aku maafin kamu 🤍
-    </button>
+    <div class="full-yes-inner">
+      <button id="bigYesBtn" style="
+        border:none;
+        cursor:pointer;
+        border-radius:40px;
+        padding:22px 26px;
+        font-size:1.4rem;
+        font-weight:700;
+        background:#ff5fa2;
+        color:white;
+        box-shadow:0 10px 30px rgba(0,0,0,0.25);
+        max-width:90%;
+        text-align:center;
+      ">
+        Oke, aku maafin kamu 🤍
+      </button>
+      <div class="wa-container" id="waOverlayContainer">
+        <a
+          href="https://wa.me/6287820678698?text=hallo"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="wa-button-overlay"
+        >
+          Chat aku di WhatsApp
+        </a>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -256,8 +359,8 @@
     const questionSection = document.getElementById('questionSection');
     const nextBtn = document.getElementById('nextBtn');
 
-    const emojiEl = document.getElementById('emoji');
     const titleEl = document.getElementById('titleText');
+    const headerImg = document.getElementById('headerImage');
 
     const noBtn = document.getElementById('noBtn');
     const yesWrapper = document.getElementById('yesWrapper');
@@ -265,8 +368,13 @@
     const card = document.getElementById('card');
     const fullYesContainer = document.getElementById('fullYesContainer');
     const bigYesBtn = document.getElementById('bigYesBtn');
-    const particleLayer = document.getElementById('particleLayer');
 
+    const waContainer = document.getElementById('waContainer');
+    const waOverlayContainer = document.getElementById('waOverlayContainer');
+
+    const confettiLayer = document.getElementById('confettiLayer');
+
+    // musik
     const bgMusic = new Audio("musik.mp3");
     bgMusic.loop = true;
     let musicStarted = false;
@@ -278,10 +386,10 @@
       bgMusic.play().catch(() => {});
     }
 
-    // coba autoplay saat halaman selesai load
     window.addEventListener("load", startMusic);
     document.body.addEventListener("click", startMusic, { once: true });
 
+    // teks paragraf
     const steps = [
       "Aku ingin minta maaf, bukan karena seharusnya aku minta maaf, tapi karena aku benar-benar sadar kalau aku sudah melakukan kesalahan yang besar.",
       "Kesalahan yang tidak cuma bikin kamu kecewa, tapi juga bikin aku kecewa sama diriku sendiri. Aku sering mikir ulang tentang hal-hal yang terjadi dan sadar betapa fatalnya yang aku lakukan waktu itu.",
@@ -291,6 +399,7 @@
       "Tapi kalau pun tidak bisa kembali seperti dulu, setidaknya izinkan aku tetap jadi teman. Teman yang menghargai kamu tanpa nuntut apa-apa dan tanpa nyusahin kamu. Terima kasih sudah pernah bikin aku jadi seseorang yang lebih baik, bahkan lewat luka dan penyesalan yang aku sendiri ciptakan."
     ];
 
+    // judul per step + judul akhir
     const titles = [
       "Aku Mengakui Kesalahanku",
       "Penyesalanku",
@@ -301,22 +410,23 @@
       "Maafkan Aku"
     ];
 
-    const emojis = [
-      "😔",
-      "😞",
-      "🕊️",
-      "💞",
-      "🚪",
-      "🤝",
-      "🥺"
+    // gambar per step (1-7)
+    const images = [
+      "gambar/1.png",
+      "gambar/2.png",
+      "gambar/3.png",
+      "gambar/4.png",
+      "gambar/5.png",
+      "gambar/6.png",
+      "gambar/7.png"
     ];
 
     let currentStep = 0;
     let nextTimer = null;
 
     function setHeaderForStep(index) {
-      emojiEl.textContent = emojis[index] || "🥺";
       titleEl.textContent = titles[index] || "Maafkan Aku";
+      headerImg.src = images[index] || images[0];
     }
 
     function showStep(index) {
@@ -345,8 +455,7 @@
       nextBtn.classList.remove("show");
       nextBtn.disabled = true;
 
-      emojiEl.textContent = emojis[6];
-      titleEl.textContent = titles[6];
+      setHeaderForStep(6); // judul + gambar ke-7
     }
 
     nextBtn.addEventListener('click', () => {
@@ -359,31 +468,39 @@
       }
     });
 
-    function spawnParticle(x, y, symbol = "💗") {
-      const span = document.createElement("span");
-      span.className = "particle";
-      span.textContent = symbol;
+    // confetti
+    function launchConfetti() {
+      const colors = ["#ff5fa2", "#ffd166", "#06d6a0", "#118ab2", "#ffffff"];
+      const amount = 120;
 
-      const offsetX = (Math.random() - 0.5) * 40;
-      span.style.left = `${x + offsetX}px`;
-      span.style.top = `${y}px`;
+      for (let i = 0; i < amount; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        const size = 6 + Math.random() * 6;
+        conf.style.width = size + "px";
+        conf.style.height = (size * 1.6) + "px";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        conf.style.animationDelay = (Math.random() * 1.5) + "s";
 
-      const size = 0.9 + Math.random() * 0.6;
-      span.style.fontSize = `${size}rem`;
-
-      particleLayer.appendChild(span);
-      span.addEventListener("animationend", () => span.remove());
+        confettiLayer.appendChild(conf);
+        conf.addEventListener("animationend", () => conf.remove());
+      }
     }
 
-    function spawnBurstAround(element) {
-      const rect = element.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const symbols = ["💗", "✨", "💞", "💖"];
-      for (let i = 0; i < 6; i++) {
-        const sym = symbols[Math.floor(Math.random() * symbols.length)];
-        spawnParticle(centerX, centerY, sym);
+    function showWhatsAppButtons() {
+      if (waContainer) {
+        waContainer.style.display = "block";
       }
+      if (waOverlayContainer) {
+        waOverlayContainer.style.display = "block";
+      }
+    }
+
+    function handleYes() {
+      startMusic();
+      launchConfetti();
+      showWhatsAppButtons();
     }
 
     let yesScale = 1;
@@ -392,7 +509,6 @@
       startMusic();
       yesScale *= 1.35;
       yesWrapper.style.transform = `scale(${yesScale})`;
-      spawnBurstAround(noBtn);
 
       if (yesScale > 1.5 && yesScale <= 2.5) {
         noBtn.textContent = "Yakin tidak? 😳";
@@ -410,14 +526,12 @@
     });
 
     yesBtn.addEventListener('click', () => {
-      startMusic();
-      spawnBurstAround(yesBtn);
+      handleYes();
       alert("Terima kasih sudah maafin aku 🤍");
     });
 
     bigYesBtn.addEventListener('click', () => {
-      startMusic();
-      spawnBurstAround(bigYesBtn);
+      handleYes();
       alert("Aku janji bakal terus berusaha jadi lebih baik setiap harinya 🫶");
     });
 
