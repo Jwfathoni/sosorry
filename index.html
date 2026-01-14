@@ -567,11 +567,19 @@
     }
 
     function handleYes() {
-      startMusic();
-      hideAnswerButtons();
-      launchConfetti();
-      showWhatsAppButtons();
-    }
+  startMusic();
+  hideAnswerButtons();
+
+  // ubah teks pertanyaan jadi ucapan terima kasih
+  const qText = document.querySelector(".question-text");
+  if (qText) {
+    qText.textContent = "Makasih udah maafin aku 🤍";
+  }
+
+  launchConfetti();
+  showWhatsAppButtons();
+}
+
 
     let yesScale = 1;
 
