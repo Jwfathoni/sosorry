@@ -16,20 +16,42 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at top, #ffe6f0, #ffd1dc, #f8bbff);
+      background: linear-gradient(135deg, #ffe6f0, #ffd1dc, #f8bbff, #c6b9ff);
+      background-size: 250% 250%;
+      animation: bgMove 14s ease-in-out infinite;
       overflow: hidden;
       padding: 16px;
+      position: relative;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .card {
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
       padding: 24px 28px;
-      border-radius: 18px;
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.12);
       max-width: 480px;
       text-align: center;
-      border: 2px solid #ff7bb4;
-      transition: opacity 0.3s ease;
+      border: 2px solid rgba(255, 123, 180, 0.8);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      animation: popIn 0.6s ease-out both;
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     h1 {
@@ -48,6 +70,13 @@
     .emoji {
       font-size: 2.6rem;
       margin-bottom: 8px;
+      animation: emojiFloat 3.5s ease-in-out infinite;
+    }
+
+    @keyframes emojiFloat {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0); }
     }
 
     .buttons {
@@ -65,7 +94,11 @@
       border-radius: 999px;
       padding: 12px 22px;
       font-size: 0.95rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease;
     }
 
     #noBtn {
@@ -75,7 +108,7 @@
 
     #noBtn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
     }
 
     #yesWrapper {
@@ -87,17 +120,25 @@
     #yesBtn {
       background: #ff5fa2;
       color: white;
-      box-shadow: 0 4px 12px rgba(255, 95, 162, 0.5);
+      box-shadow: 0 4px 12px rgba(255, 95, 162, 0.6);
+      animation: yesPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes yesPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     #yesBtn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(255, 95, 162, 0.7);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 16px rgba(255, 95, 162, 0.85);
     }
 
     .hidden-card {
       opacity: 0;
       pointer-events: none;
+      transform: scale(0.9);
     }
 
     .full-yes {
@@ -109,35 +150,81 @@
       background: radial-gradient(circle at top, #ffe6f0, #ffd1dc, #f8bbff);
       z-index: 9999;
     }
+
+    .particle {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: floatUp 2s ease-out forwards;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.7);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-80px) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .subline-rotator {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: #777;
+      min-height: 18px;
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
 
+  <div id="particleLayer"></div>
+
   <div class="card" id="card">
     <div class="emoji">🥺</div>
     <h1>Maafkan Aku</h1>
+
     <p>
-      Aku minta maaf atas semua kesalahan yang pernah aku lakukan dulu.
-      Aku sadar beberapa hal pernah menyakitimu, dan kalau kamu kecewa,
-      kamu punya alasan untuk itu.
+      Aku ingin minta maaf, bukan karena seharusnya aku minta maaf,
+      tapi karena aku benar-benar sadar kalau aku sudah melakukan kesalahan yang besar.
+      Kesalahan yang tidak cuma bikin kamu kecewa, tapi juga bikin aku kecewa sama diriku sendiri.
     </p>
     <p>
-      Aku nggak mau pura-pura kalau semuanya baik-baik saja,
-      karena memang nggak. Aku menyesal dan aku ingin memperbaikinya —
-      meskipun mungkin sudah terlambat.
+      Aku sering mikir ulang tentang hal-hal yang terjadi.
+      Semakin aku mikir, semakin aku sadar betapa fatalnya hal yang aku lakukan waktu itu.
+      Aku tidak bisa balik ke masa lalu buat benerin semuanya, tapi aku bisa belajar dari situ.
     </p>
     <p>
-      Kalau memang kamu sudah nggak punya harapan lagi sama aku,
-      nggak apa-apa… Aku bakal tetap menghargai kamu dan semua yang pernah ada.
+      Setiap hari aku coba jadi orang yang lebih baik, bukan untuk keliatan baik,
+      tapi karena aku tidak mau kesalahan itu terus nempel di diri aku selamanya.
     </p>
     <p>
-      Kalau jalannya cuma bisa sebagai teman, aku ikhlas.
-      Terima kasih sudah jadi bagian dari hidupku, meskipun caranya harus berubah.
+      Bersama kamu, aku pernah merasa jadi versi terbaik dari diriku sendiri.
+      Kamu bikin aku paham banyak hal tentang hidup, tentang cinta, dan tentang cara memperlakukan seseorang.
+    </p>
+    <p>
+      Mungkin sekarang aku tidak punya kesempatan lagi.
+      Mungkin pintunya sudah tertutup, dan kalau itu pilihanmu, aku terima.
+    </p>
+    <p>
+      Tapi kalau pun tidak bisa kembali seperti dulu, setidaknya izinkan aku tetap jadi teman.
+      Teman yang menghargai kamu tanpa nuntut apa-apa dan tanpa nyusahin kamu.
+      Terima kasih sudah pernah bikin aku jadi seseorang yang lebih baik,
+      bahkan lewat luka dan penyesalan yang aku sendiri ciptakan.
     </p>
 
     <p style="margin-top:14px; font-size:0.9rem; color:#666;">
-      Kamu mau maafin aku nggak? 🙈
+      Kamu mau maafin aku tidak? 🙈
     </p>
+    <div class="subline-rotator" id="subline">
+      (Jawaban kamu bener-bener berarti buat aku)
+    </div>
 
     <div class="buttons">
       <button id="noBtn">Tidak 😠</button>
@@ -168,15 +255,82 @@
     const card = document.getElementById('card');
     const fullYesContainer = document.getElementById('fullYesContainer');
     const bigYesBtn = document.getElementById('bigYesBtn');
+    const particleLayer = document.getElementById('particleLayer');
+    const subline = document.getElementById('subline');
 
     let yesScale = 1;
 
+    // Musik background dari musik.mp3
+    const bgMusic = new Audio("musik.mp3");
+    bgMusic.loop = true;
+
+    let musicStarted = false;
+    function startMusic() {
+      if (musicStarted) return;
+      musicStarted = true;
+      bgMusic.volume = 0.7;
+      bgMusic.play().catch(() => {
+        // kalau browser blok autoplay, musik akan jalan setelah klik berikutnya
+      });
+    }
+
+    const sublines = [
+      "(Jawaban kamu bener-bener berarti buat aku)",
+      "Apa pun jawabannya, aku tetap menghargai kamu.",
+      "Kalau mau pelan-pelan juga tidak apa-apa kok.",
+      "Aku cuma pengin jujur sama perasaanku.",
+    ];
+    let subIndex = 0;
+    setInterval(() => {
+      subIndex = (subIndex + 1) % sublines.length;
+      subline.style.opacity = 0;
+      setTimeout(() => {
+        subline.textContent = sublines[subIndex];
+        subline.style.opacity = 0.9;
+      }, 200);
+    }, 4000);
+
+    function spawnParticle(x, y, symbol = "💗") {
+      const span = document.createElement("span");
+      span.className = "particle";
+      span.textContent = symbol;
+
+      const offsetX = (Math.random() - 0.5) * 40;
+      span.style.left = `${x + offsetX}px`;
+      span.style.top = `${y}px`;
+
+      const size = 0.9 + Math.random() * 0.6;
+      span.style.fontSize = `${size}rem`;
+
+      particleLayer.appendChild(span);
+
+      span.addEventListener("animationend", () => {
+        span.remove();
+      });
+    }
+
+    function spawnBurstAround(element) {
+      const rect = element.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const symbols = ["💗", "✨", "💞", "💖"];
+      for (let i = 0; i < 6; i++) {
+        const sym = symbols[Math.floor(Math.random() * symbols.length)];
+        spawnParticle(centerX, centerY, sym);
+      }
+    }
+
     noBtn.addEventListener('click', () => {
+      startMusic();
+
       yesScale *= 1.35;
       yesWrapper.style.transform = `scale(${yesScale})`;
 
+      spawnBurstAround(noBtn);
+
       if (yesScale > 1.5 && yesScale <= 2.5) {
-        noBtn.textContent = "Yakin nggak? 😳";
+        noBtn.textContent = "Yakin tidak? 😳";
       } else if (yesScale > 2.5 && yesScale <= 3.5) {
         noBtn.textContent = "Plis jangan gitu 🥺";
       } else if (yesScale > 3.5 && yesScale <= 4.5) {
@@ -191,12 +345,19 @@
     });
 
     yesBtn.addEventListener('click', () => {
+      startMusic();
+      spawnBurstAround(yesBtn);
       alert("Terima kasih sudah maafin aku 🤍");
     });
 
     bigYesBtn.addEventListener('click', () => {
-      alert("Aku janji bakal jadi lebih baik 🫶");
+      startMusic();
+      spawnBurstAround(bigYesBtn);
+      alert("Aku janji bakal jadi lebih baik setiap harinya 🫶");
     });
+
+    // Kalau user klik di mana saja di body, coba mulai musik juga
+    document.body.addEventListener('click', startMusic, { once: true });
   </script>
 </body>
 </html>
